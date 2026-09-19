@@ -1,0 +1,121 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px max(24px, calc((100% - 1180px) / 2));
+    border-bottom: 1px solid var(--line);
+    background: rgba(251, 250, 246, .94);
+    backdrop-filter: blur(12px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.04em;
+    white-space: nowrap;
+}
+
+.brand-mark {
+    position: relative;
+    display: grid;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    place-items: center;
+    color: #101410;
+    background: var(--orange);
+    font: 700 16px Arial, sans-serif;
+    transform: rotate(-7deg);
+}
+
+.brand-mark::after {
+    position: absolute;
+    right: -4px;
+    bottom: 4px;
+    width: 9px;
+    height: 2px;
+    background: var(--ink);
+    content: '';
+}
+
+.brand-dot {
+    color: var(--orange);
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    margin: 0 auto;
+}
+
+.nav-link {
+    padding: 5px 0;
+    color: var(--muted);
+    font: 12px Arial, sans-serif;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: var(--ink);
+    border-bottom: 1px solid var(--orange);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font: 12px Arial, sans-serif;
+}
+
+.nav-login {
+    color: var(--ink);
+}
+
+.nav-signup {
+    padding: 11px 15px;
+    color: #101410;
+    background: var(--ink);
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+.nav-signup:hover {
+    color: #fff;
+    background: var(--orange);
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 0;
+    }
+
+    .nav-actions {
+        margin-left: auto;
+    }
+
+    .nav-signup {
+        padding: 9px 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    .nav-login {
+        display: none;
+    }
+}

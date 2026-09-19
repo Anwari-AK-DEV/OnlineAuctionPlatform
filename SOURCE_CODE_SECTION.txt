@@ -1,0 +1,562 @@
+SOURCE CODE
+===========
+
+Project Title: BidHub - A Full-Stack Online Auction Platform Prototype
+
+The source code for BidHub is divided into two main parts:
+
+1. Frontend source code
+2. Backend source code
+
+The complete source code is available inside the project directory. The following section describes the important source files and their responsibilities.
+
+
+1. FRONTEND SOURCE CODE
+-----------------------
+
+Frontend Technology: React, Vite, JavaScript, CSS
+
+Frontend directory:
+
+frontend/src/
+
+Important frontend files:
+
+App.jsx
+--------
+Defines the main React application and routes for the Home, Auctions, Categories, How It Works, Login, and Register pages.
+
+Home.jsx
+--------
+Displays the main BidHub landing page, featured auctions, search control, category filter, statistics, and calls to action.
+
+Auctions.jsx
+------------
+Displays all available auction listings. Auction data is loaded from the backend API with local fallback data.
+
+AuctionCard.jsx
+---------------
+Reusable React component used to display an individual auction item. It shows the image, category, remaining time, current bid, and number of bids.
+
+Categories.jsx
+--------------
+Displays auction categories and provides navigation to the auction listing page.
+
+About.jsx
+---------
+Displays the How It Works page, including buyer and seller workflows, trust information, and frequently asked questions.
+
+Login.jsx
+---------
+Provides the login form. It sends the email and password to the backend API. After successful authentication, the JWT session is stored in local storage and the user is redirected to the auction page.
+
+Register.jsx
+------------
+Provides the account creation form. It collects the user's name, email, password, and account role. The form sends the information to the backend registration endpoint.
+
+Navbar.jsx
+----------
+Provides navigation between the main pages of the application.
+
+api.js
+-------
+Contains the reusable frontend API request helper and session storage functions.
+
+Example API helper:
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+
+export async function apiRequest(path, options = {}) {
+  const response = await fetch(`${API_BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options,
+  });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(body.message || 'The request could not be completed.');
+  return body;
+}
+
+auctionData.js
+--------------
+Contains seeded auction and category data used as fallback data if the backend is unavailable during local development.
+
+App.css and Navbar.css
+----------------------
+Contain the responsive dark theme, layouts, auction cards, buttons, forms, navigation, badges, and mobile styles.
+
+
+2. BACKEND SOURCE CODE
+----------------------
+
+Backend Technology: Node.js, Express, bcryptjs, JSON Web Token, CORS
+
+Backend directory:
+
+backend/src/server.js
+
+server.js
+---------
+The main backend entry point. It creates the Express server, enables CORS and JSON request parsing, reads and writes local data, authenticates users, and handles auction operations.
+
+The backend runs on:
+
+http://localhost:4000
+
+
+3. BACKEND API ENDPOINTS
+------------------------
+
+GET /api/health
+
+Checks whether the backend service is running.
+
+GET /api/auctions
+
+Returns the available auction listings.
+
+POST /api/auth/register
+
+Creates a new user account. The request accepts first name, last name, email, password, and role. The password is hashed with bcrypt before being stored.
+
+Example request:
+
+{
+  "firstName": "Demo",
+  "lastName": "Collector",
+  "email": "demo@example.com",
+  "password": "secret123",
+  "role": "collector"
+}
+
+POST /api/auth/login
+
+Authenticates an existing user. If the credentials are valid, the server returns a JSON Web Token.
+
+Example request:
+
+{
+  "email": "demo@example.com",
+  "password": "secret123"
+}
+
+GET /api/auth/me
+
+Returns the currently authenticated user's information. This endpoint requires a valid bearer token.
+
+POST /api/auctions/:id/bids
+
+Allows an authenticated user to place a bid. The submitted amount must be greater than the current bid.
+
+Example request:
+
+{
+  "amount": 350
+}
+
+Authentication header:
+
+Authorization: Bearer <jwt-token>
+
+
+4. AUTHENTICATION SOURCE CODE LOGIC
+-----------------------------------
+
+The backend uses bcryptjs to hash passwords. Plain text passwords are not stored in the data file.
+
+The backend uses JSON Web Tokens to represent authenticated sessions. The token contains the user ID, email, and name, and expires after seven days.
+
+Protected endpoints use authentication middleware. The middleware reads the bearer token from the Authorization header and rejects requests that do not contain a valid token.
+
+
+5. DATA STORAGE
+---------------
+
+The prototype stores local development data in:
+
+backend/data/store.json
+
+The store contains two main collections:
+
+- users
+- auctions
+
+The data file is created automatically by the backend if it does not already exist.
+
+User records contain:
+
+- Unique user ID
+- Name
+- Email address
+- Account role
+- Hashed password
+- Account creation date
+
+Auction records contain:
+
+- Auction ID
+- Item name
+- Category
+- Current bid
+- Number of bids
+- Remaining time
+- Image URL
+
+
+6. RUNNING THE SOURCE CODE
+--------------------------
+
+Open a terminal in the project root and run:
+
+npm install
+npm run dev
+
+The root command starts both the frontend and backend together.
+
+Frontend URL:
+
+http://localhost:5173
+
+Backend URL:
+
+http://localhost:4000
+
+Backend health URL:
+
+http://localhost:4000/api/health
+
+
+7. SOURCE CODE VALIDATION
+-------------------------
+
+The source code was validated using the following commands:
+
+npm run lint
+npm run build
+
+ESLint checks the frontend source code for errors. The Vite production build confirms that the React application can be compiled successfully.
+
+
+8. PROJECT SOURCE CODE SUMMARY
+------------------------------
+
+BidHub demonstrates a separated full-stack architecture. React handles the user interface and client-side navigation. Express handles REST API requests. bcryptjs protects stored passwords. JSON Web Tokens protect authenticated routes. The local JSON store provides simple persistence for the prototype.
+
+The source code is designed so that the local JSON storage can later be replaced by a production database such as MongoDB or PostgreSQL.
+
+
+9. VALIDATION CHECK SECTION
+--------------------------
+
+The BidHub project was checked at frontend, backend, API, authentication, and user-interface levels. The following validation checks can be included in the project report.
+
+
+9.1 Frontend Validation
+-----------------------
+
+Command used:
+
+npm run lint
+
+Purpose:
+
+This command checks the React source files for JavaScript, JSX, and code-quality errors using ESLint.
+
+Expected result:
+
+The command completes successfully without lint errors.
+
+Result:
+
+PASS - Frontend source code passed ESLint validation.
+
+
+Command used:
+
+npm run build
+
+Purpose:
+
+This command creates an optimized production build of the React and Vite frontend.
+
+Expected result:
+
+The Vite build completes successfully and generates the production files in the frontend/dist directory.
+
+Result:
+
+PASS - Frontend production build completed successfully.
+
+
+9.2 Backend Syntax Validation
+-----------------------------
+
+Command used:
+
+node --check backend/src/server.js
+
+Purpose:
+
+This command checks the backend JavaScript file for syntax errors before the server is started.
+
+Expected result:
+
+The command exits without reporting a syntax error.
+
+Result:
+
+PASS - Backend server source passed syntax validation.
+
+
+9.3 Backend Health Check
+------------------------
+
+Endpoint tested:
+
+GET http://localhost:4000/api/health
+
+Expected response:
+
+{
+  "status": "ok",
+  "service": "bidhub-api"
+}
+
+Result:
+
+PASS - The backend API started successfully and returned HTTP status 200.
+
+
+9.4 Auction Listing Check
+-------------------------
+
+Endpoint tested:
+
+GET http://localhost:4000/api/auctions
+
+Purpose:
+
+To verify that auction data can be read from the local data store and returned to the frontend.
+
+Expected result:
+
+The API returns HTTP status 200 and a list of auction objects.
+
+Result:
+
+PASS - The API returned the seeded auction listings successfully.
+
+
+9.5 User Registration Check
+---------------------------
+
+Endpoint tested:
+
+POST http://localhost:4000/api/auth/register
+
+Test data:
+
+{
+  "firstName": "Demo",
+  "lastName": "Collector",
+  "email": "demo@example.com",
+  "password": "secret123",
+  "role": "collector"
+}
+
+Expected result:
+
+The server validates the data, hashes the password, stores the new user, and returns HTTP status 201 with a JWT token and safe user information.
+
+Result:
+
+PASS - A new user account was created successfully.
+
+
+9.6 Duplicate Registration Check
+---------------------------------
+
+Test:
+
+Register another account using an email address that already exists.
+
+Expected result:
+
+The server rejects the request with HTTP status 409 and does not create a duplicate user.
+
+Result:
+
+PASS - Duplicate email registration is rejected.
+
+
+9.7 Login Check
+--------------
+
+Endpoint tested:
+
+POST http://localhost:4000/api/auth/login
+
+Test data:
+
+{
+  "email": "demo@example.com",
+  "password": "secret123"
+}
+
+Expected result:
+
+The server verifies the password and returns HTTP status 200 with a JWT token and user information.
+
+Result:
+
+PASS - Registered users can log in successfully.
+
+
+9.8 Invalid Login Check
+-----------------------
+
+Test:
+
+Attempt to log in with an incorrect password.
+
+Expected result:
+
+The server returns HTTP status 401 and does not issue a valid session token.
+
+Result:
+
+PASS - Invalid login credentials are rejected.
+
+
+9.9 Protected Endpoint Check
+---------------------------
+
+Endpoint tested:
+
+GET http://localhost:4000/api/auth/me
+
+Test:
+
+Send the request without an Authorization bearer token.
+
+Expected result:
+
+The server returns HTTP status 401 with an authentication-required message.
+
+Result:
+
+PASS - Protected endpoints reject unauthenticated requests.
+
+
+9.10 Authenticated User Check
+----------------------------
+
+Test:
+
+Send a valid JWT token in the Authorization header.
+
+Header:
+
+Authorization: Bearer <jwt-token>
+
+Expected result:
+
+The server verifies the token and returns the authenticated user's safe profile information.
+
+Result:
+
+PASS - Valid authenticated sessions can access the current-user endpoint.
+
+
+9.11 Bid Validation Check
+-------------------------
+
+Endpoint tested:
+
+POST http://localhost:4000/api/auctions/1/bids
+
+Test data:
+
+{
+  "amount": 350
+}
+
+Expected result for a valid bid:
+
+The bid is higher than the current auction value. The server updates the current bid and bid count and returns HTTP status 200.
+
+Result:
+
+PASS - A valid authenticated bid is accepted.
+
+
+Test:
+
+Submit an amount that is equal to or lower than the current bid.
+
+Expected result:
+
+The server returns HTTP status 400 and does not update the auction.
+
+Result:
+
+PASS - Lower bids are rejected.
+
+
+9.12 Responsive Interface Check
+-------------------------------
+
+Test screens:
+
+- Desktop screen
+- Tablet screen
+- Mobile screen
+
+Expected result:
+
+Navigation, auction cards, forms, buttons, badges, and content adapt to the available screen width without horizontal overflow.
+
+Result:
+
+PASS - The frontend includes responsive CSS rules for desktop and mobile layouts.
+
+
+9.13 API and Frontend Integration Check
+---------------------------------------
+
+Test:
+
+Start the frontend and backend together using the root command:
+
+npm run dev
+
+Expected result:
+
+The React frontend runs on port 5173 and the Express API runs on port 4000. The frontend loads auction listings from the API. Login and registration forms send requests to the backend.
+
+Result:
+
+PASS - Frontend and backend communicate successfully through REST API requests.
+
+
+9.14 Final Validation Summary
+-----------------------------
+
+| Validation Area | Expected Result | Status |
+|----------------|-----------------|--------|
+| Frontend lint | No ESLint errors | PASS |
+| Frontend build | Vite build succeeds | PASS |
+| Backend syntax | No JavaScript syntax errors | PASS |
+| Backend health | HTTP 200 response | PASS |
+| Auction listing | Auction array returned | PASS |
+| Registration | HTTP 201 and JWT returned | PASS |
+| Duplicate registration | HTTP 409 rejection | PASS |
+| Valid login | HTTP 200 and JWT returned | PASS |
+| Invalid login | HTTP 401 rejection | PASS |
+| Unauthenticated route | HTTP 401 rejection | PASS |
+| Authenticated route | User data returned | PASS |
+| Valid bid | Auction updated | PASS |
+| Lower bid | HTTP 400 rejection | PASS |
+| Responsive interface | Layout adapts to screen size | PASS |
+| Full-stack integration | Frontend and backend communicate | PASS |
+
+The validation checks demonstrate that BidHub is a working full-stack prototype with a functioning React frontend, Express backend, authentication workflow, protected API endpoints, auction listing service, and bid validation logic.

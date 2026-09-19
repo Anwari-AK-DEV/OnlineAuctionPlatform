@@ -1,0 +1,171 @@
+BIDHUB BIBLIOGRAPHY
+====================
+
+Project Title: BidHub - A Full-Stack Online Auction Platform Prototype
+
+Student Name: [Your Full Name]
+Roll Number: [Your Roll Number]
+Course: Bachelor of Computer Applications (BCA)
+College/Institute: [College Name]
+Academic Year: 2025-2026
+
+
+1. React Documentation
+
+React Team. "React Documentation." React, 2026.
+Available at: https://react.dev/
+
+Purpose used in project: Reference for React components, state management, event handling, and frontend application development.
+
+
+2. Vite Documentation
+
+Vite Team. "Vite Documentation." Vite, 2026.
+Available at: https://vite.dev/
+
+Purpose used in project: Reference for frontend development server, project build process, and production bundling.
+
+
+3. Node.js Documentation
+
+OpenJS Foundation. "Node.js Documentation." Node.js, 2026.
+Available at: https://nodejs.org/docs/
+
+Purpose used in project: Reference for the JavaScript runtime, file system operations, modules, and server-side JavaScript execution.
+
+
+4. Express.js Documentation
+
+OpenJS Foundation. "Express - Node.js Web Application Framework." Express.js, 2026.
+Available at: https://expressjs.com/
+
+Purpose used in project: Reference for creating the backend server, routes, middleware, JSON requests, and REST API endpoints.
+
+
+5. MDN Web Docs
+
+Mozilla Developer Network. "MDN Web Docs."
+Available at: https://developer.mozilla.org/
+
+Purpose used in project: Reference for HTML, CSS, JavaScript, Fetch API, forms, responsive design, accessibility, and browser APIs.
+
+
+6. React Router Documentation
+
+React Router Team. "React Router Documentation."
+Available at: https://reactrouter.com/
+
+Purpose used in project: Reference for client-side routing and navigation between the Home, Auctions, Categories, How It Works, Login, and Register pages.
+
+
+7. JSON Web Token Introduction
+
+Auth0. "Introduction to JSON Web Tokens."
+Available at: https://jwt.io/introduction
+
+Purpose used in project: Reference for creating and validating JWT-based authentication sessions.
+
+
+8. jsonwebtoken npm Package
+
+Auth0. "jsonwebtoken npm Package."
+Available at: https://www.npmjs.com/package/jsonwebtoken
+
+Purpose used in project: Server-side implementation of JSON Web Tokens for protected API endpoints.
+
+
+9. bcryptjs npm Package
+
+DcodeIO. "bcryptjs npm Package."
+Available at: https://www.npmjs.com/package/bcryptjs
+
+Purpose used in project: Password hashing and password comparison during user registration and login.
+
+
+10. CORS npm Package
+
+Express.js Community. "cors npm Package."
+Available at: https://www.npmjs.com/package/cors
+
+Purpose used in project: Allowing the React frontend and Express backend to communicate during local development.
+
+
+11. dotenv npm Package
+
+Motdotla. "dotenv npm Package."
+Available at: https://www.npmjs.com/package/dotenv
+
+Purpose used in project: Loading environment configuration such as the backend port, JWT secret, and frontend origin.
+
+
+12. JavaScript Fetch API
+
+Mozilla Developer Network. "Fetch API."
+Available at: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+Purpose used in project: Sending registration, login, auction, and API requests from the React frontend to the backend.
+
+
+13. HTTP Authentication
+
+Mozilla Developer Network. "HTTP Authentication."
+Available at: https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
+
+Purpose used in project: Reference for the Authorization header and bearer-token authentication used by protected API requests.
+
+
+14. CSS Flexible Box Layout
+
+World Wide Web Consortium. "CSS Flexible Box Layout Module."
+Available at: https://www.w3.org/TR/css-flexbox-1/
+
+Purpose used in project: Reference for responsive navigation, button layout, forms, and flexible page sections.
+
+
+15. CSS Grid Layout
+
+World Wide Web Consortium. "CSS Grid Layout Module."
+Available at: https://www.w3.org/TR/css-grid-1/
+
+Purpose used in project: Reference for auction cards, responsive page layouts, process sections, and dashboard-style content.
+
+
+16. Web Content Accessibility Guidelines
+
+World Wide Web Consortium. "Web Content Accessibility Guidelines (WCAG) 2.2."
+Available at: https://www.w3.org/TR/WCAG22/
+
+Purpose used in project: General reference for accessible form labels, keyboard focus states, readable contrast, and semantic HTML.
+
+
+17. npm Documentation
+
+npm, Inc. "npm Documentation."
+Available at: https://docs.npmjs.com/
+
+Purpose used in project: Reference for package installation, project scripts, dependency management, and running the frontend and backend.
+
+
+18. Visual Studio Code Documentation
+
+Microsoft. "Visual Studio Code Documentation."
+Available at: https://code.visualstudio.com/docs
+
+Purpose used in project: Development environment reference for editing, terminal usage, project organization, and debugging.
+
+
+19. Unsplash Source Images
+
+Unsplash. "Unsplash Image Platform."
+Available at: https://unsplash.com/
+
+Purpose used in project: Placeholder and presentation imagery for auction item cards and the landing page.
+
+Note: Image usage should follow the applicable Unsplash license and attribution requirements if the project is published publicly.
+
+
+20. Bibliography Usage Note
+
+The above references were consulted for learning, implementation, and validation of the BidHub project. The project uses open-source technologies and publicly available technical documentation. All third-party packages remain subject to their respective licenses and terms of use.
+
+Access Date: [Enter the date on which you accessed these references]

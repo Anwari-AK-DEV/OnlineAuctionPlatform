@@ -1,0 +1,597 @@
+BIDHUB VALIDATION CHECK REPORT
+==============================
+
+Project Title: BidHub - A Full-Stack Online Auction Platform Prototype
+
+Student Name: [Your Full Name]
+Roll Number: [Your Roll Number]
+Course: Bachelor of Computer Applications (BCA)
+College/Institute: [College Name]
+Academic Year: 2025-2026
+
+
+1. PURPOSE OF VALIDATION
+------------------------
+
+The purpose of this validation is to verify that the BidHub online auction platform works correctly at the frontend, backend, API, authentication, bidding, and responsive design levels.
+
+The validation confirms that:
+
+- The frontend can be compiled successfully.
+- The backend server can start without syntax errors.
+- The frontend and backend communicate correctly.
+- Users can register and log in.
+- Passwords are hashed before storage.
+- Protected endpoints reject unauthenticated requests.
+- Authenticated users can place valid bids.
+- Invalid and lower bids are rejected.
+- Auction data can be retrieved through the API.
+- The user interface works on desktop and mobile screens.
+
+
+2. TEST ENVIRONMENT
+-------------------
+
+Operating System: Windows
+Runtime: Node.js 24 or later
+Frontend Technology: React and Vite
+Backend Technology: Node.js and Express
+Data Storage: Local JSON file
+Browser: Google Chrome / Microsoft Edge / Mozilla Firefox
+Editor: Visual Studio Code
+
+Frontend URL:
+http://localhost:5173
+
+Backend URL:
+http://localhost:4000
+
+API Base URL:
+http://localhost:4000/api
+
+
+3. COMMAND VALIDATION
+---------------------
+
+3.1 Install Dependencies
+
+Command:
+
+npm install
+
+Expected Result:
+
+All frontend, backend, and root project dependencies are installed successfully.
+
+Status: PASS
+
+
+3.2 Start Frontend and Backend
+
+Command:
+
+npm run dev
+
+Expected Result:
+
+The React frontend and Express backend start together.
+
+Frontend address:
+http://localhost:5173
+
+Backend address:
+http://localhost:4000
+
+Status: PASS
+
+
+3.3 Frontend Lint Check
+
+Command:
+
+npm run lint
+
+Purpose:
+
+Checks the frontend JavaScript and JSX files for syntax and code-quality errors.
+
+Expected Result:
+
+ESLint completes without errors.
+
+Status: PASS
+
+
+3.4 Frontend Production Build
+
+Command:
+
+npm run build
+
+Purpose:
+
+Creates an optimized production build of the React application.
+
+Expected Result:
+
+Vite completes the build and creates the frontend/dist directory.
+
+Status: PASS
+
+
+3.5 Backend Syntax Check
+
+Command:
+
+node --check backend/src/server.js
+
+Purpose:
+
+Checks the backend server source file for JavaScript syntax errors.
+
+Expected Result:
+
+The command completes without syntax errors.
+
+Status: PASS
+
+
+4. API VALIDATION
+-----------------
+
+4.1 Backend Health Check
+
+Request:
+
+GET /api/health
+
+Purpose:
+
+Checks whether the backend API is running.
+
+Expected Response:
+
+{
+  "status": "ok",
+  "service": "bidhub-api"
+}
+
+Expected HTTP Status: 200
+
+Status: PASS
+
+
+4.2 Auction Listing Check
+
+Request:
+
+GET /api/auctions
+
+Purpose:
+
+Checks whether auction records can be read from the local data store.
+
+Expected Result:
+
+The API returns an array of auction objects containing the item name, category, current bid, bid count, remaining time, and image URL.
+
+Expected HTTP Status: 200
+
+Status: PASS
+
+
+5. AUTHENTICATION VALIDATION
+----------------------------
+
+5.1 User Registration with Valid Data
+
+Request:
+
+POST /api/auth/register
+
+Test Data:
+
+{
+  "firstName": "Demo",
+  "lastName": "Collector",
+  "email": "demo@example.com",
+  "password": "secret123",
+  "role": "collector"
+}
+
+Expected Result:
+
+The server validates the data, hashes the password with bcrypt, saves the user, and returns a JWT token with safe user information.
+
+Expected HTTP Status: 201
+
+Status: PASS
+
+
+5.2 Registration with Missing Data
+
+Test:
+
+Submit registration without a required name, email, or password.
+
+Expected Result:
+
+The server rejects the request and returns a validation message.
+
+Expected HTTP Status: 400
+
+Status: PASS
+
+
+5.3 Duplicate Email Registration
+
+Test:
+
+Register a second user with an email address that already exists.
+
+Expected Result:
+
+The server rejects the duplicate account and does not create another user with the same email address.
+
+Expected HTTP Status: 409
+
+Status: PASS
+
+
+5.4 Login with Valid Credentials
+
+Request:
+
+POST /api/auth/login
+
+Test Data:
+
+{
+  "email": "demo@example.com",
+  "password": "secret123"
+}
+
+Expected Result:
+
+The server verifies the password and returns a JWT token and user information.
+
+Expected HTTP Status: 200
+
+Status: PASS
+
+
+5.5 Login with Invalid Credentials
+
+Test:
+
+Submit an incorrect email or password.
+
+Expected Result:
+
+The server rejects the login attempt and does not provide an authenticated session.
+
+Expected HTTP Status: 401
+
+Status: PASS
+
+
+5.6 Password Storage Check
+
+Test:
+
+Inspect the stored user record in backend/data/store.json.
+
+Expected Result:
+
+The password is stored as a bcrypt hash. The original plain text password is not stored.
+
+Status: PASS
+
+
+6. PROTECTED ENDPOINT VALIDATION
+--------------------------------
+
+6.1 Current User without Token
+
+Request:
+
+GET /api/auth/me
+
+Test:
+
+Send the request without an Authorization header.
+
+Expected Result:
+
+The server rejects the request because authentication is required.
+
+Expected HTTP Status: 401
+
+Status: PASS
+
+
+6.2 Current User with Valid Token
+
+Request:
+
+GET /api/auth/me
+
+Header:
+
+Authorization: Bearer <jwt-token>
+
+Expected Result:
+
+The server verifies the token and returns the authenticated user's ID, name, email, and role.
+
+Expected HTTP Status: 200
+
+Status: PASS
+
+
+6.3 Current User with Invalid Token
+
+Test:
+
+Send a random or expired token in the Authorization header.
+
+Expected Result:
+
+The server rejects the request.
+
+Expected HTTP Status: 401
+
+Status: PASS
+
+
+7. BIDDING VALIDATION
+---------------------
+
+7.1 Valid Authenticated Bid
+
+Request:
+
+POST /api/auctions/1/bids
+
+Header:
+
+Authorization: Bearer <jwt-token>
+
+Request Body:
+
+{
+  "amount": 350
+}
+
+Expected Result:
+
+The bid is higher than the current bid. The server updates the auction's current bid and increases the bid count.
+
+Expected HTTP Status: 200
+
+Status: PASS
+
+
+7.2 Bid without Authentication
+
+Test:
+
+Submit a bid without a valid JWT token.
+
+Expected Result:
+
+The server rejects the bid because the route is protected.
+
+Expected HTTP Status: 401
+
+Status: PASS
+
+
+7.3 Lower Bid
+
+Test:
+
+Submit a bid equal to or lower than the current bid.
+
+Expected Result:
+
+The server rejects the bid and does not change the auction record.
+
+Expected HTTP Status: 400
+
+Status: PASS
+
+
+7.4 Invalid Bid Amount
+
+Test:
+
+Submit an amount that is negative, zero, or not a number.
+
+Expected Result:
+
+The server rejects the invalid amount.
+
+Expected HTTP Status: 400
+
+Status: PASS
+
+
+7.5 Non-Existing Auction
+
+Test:
+
+Submit a bid for an auction ID that does not exist.
+
+Expected Result:
+
+The server returns an auction-not-found message.
+
+Expected HTTP Status: 404
+
+Status: PASS
+
+
+8. FRONTEND FUNCTIONAL VALIDATION
+---------------------------------
+
+8.1 Home Page
+
+Expected Result:
+
+The home page displays the BidHub branding, dark theme, auction cards, search field, category filter, statistics, and navigation links.
+
+Status: PASS
+
+
+8.2 Auction Search
+
+Test:
+
+Enter an auction name or keyword in the search field.
+
+Expected Result:
+
+Only matching auction cards are displayed.
+
+Status: PASS
+
+
+8.3 Category Filter
+
+Test:
+
+Select a category from the category dropdown.
+
+Expected Result:
+
+Only auctions from the selected category are displayed.
+
+Status: PASS
+
+
+8.4 Login Form
+
+Expected Result:
+
+The login form accepts email and password, displays server errors, shows a loading state, stores the session token after success, and navigates to the auctions page.
+
+Status: PASS
+
+
+8.5 Account Creation Form
+
+Expected Result:
+
+The registration form accepts the user's name, email, password, account role, and terms consent. After successful registration, the session is stored and the user is navigated to the auctions page.
+
+Status: PASS
+
+
+8.6 Password Visibility Control
+
+Test:
+
+Click the Show or Hide password control.
+
+Expected Result:
+
+The password field changes between hidden and visible text.
+
+Status: PASS
+
+
+8.7 Navigation
+
+Expected Result:
+
+The Home, Auctions, Categories, How It Works, Login, and Create Account links navigate to the correct routes.
+
+Status: PASS
+
+
+9. RESPONSIVE DESIGN VALIDATION
+-------------------------------
+
+9.1 Desktop Screen
+
+Expected Result:
+
+The navigation, hero section, auction grid, forms, and content are displayed correctly on a desktop screen.
+
+Status: PASS
+
+
+9.2 Tablet Screen
+
+Expected Result:
+
+The auction grid and page sections adjust to the available width.
+
+Status: PASS
+
+
+9.3 Mobile Screen
+
+Expected Result:
+
+The navigation wraps correctly, cards become a single column where required, forms remain usable, and no horizontal overflow occurs.
+
+Status: PASS
+
+
+10. SECURITY VALIDATION
+-----------------------
+
+The following security checks were reviewed:
+
+- Passwords are hashed with bcrypt before storage.
+- Password hashes are not returned to the frontend.
+- JWT tokens expire after seven days.
+- Protected routes require bearer-token authentication.
+- Invalid tokens are rejected.
+- Duplicate account emails are rejected.
+- Bid amounts are validated on the backend.
+- Lower bids are rejected.
+- CORS accepts only configured local frontend origins.
+- The JWT secret can be supplied through an environment variable.
+
+Security Review Status: PASS for prototype scope.
+
+
+11. FINAL VALIDATION SUMMARY
+----------------------------
+
+| Test Area | Expected Result | Status |
+|-----------|-----------------|--------|
+| Dependency installation | Dependencies install successfully | PASS |
+| Frontend lint | No ESLint errors | PASS |
+| Frontend build | Vite build succeeds | PASS |
+| Backend syntax | No syntax errors | PASS |
+| API health | HTTP 200 response | PASS |
+| Auction listing | Auction data returned | PASS |
+| User registration | HTTP 201 and JWT returned | PASS |
+| Missing registration data | HTTP 400 rejection | PASS |
+| Duplicate registration | HTTP 409 rejection | PASS |
+| Valid login | HTTP 200 and JWT returned | PASS |
+| Invalid login | HTTP 401 rejection | PASS |
+| Password hashing | Plain text password not stored | PASS |
+| Protected route without token | HTTP 401 rejection | PASS |
+| Protected route with token | User information returned | PASS |
+| Valid bid | Auction is updated | PASS |
+| Unauthenticated bid | HTTP 401 rejection | PASS |
+| Lower bid | HTTP 400 rejection | PASS |
+| Invalid bid amount | HTTP 400 rejection | PASS |
+| Missing auction | HTTP 404 rejection | PASS |
+| Search | Matching lots displayed | PASS |
+| Category filter | Correct lots displayed | PASS |
+| Responsive layout | Desktop and mobile supported | PASS |
+| Frontend/backend integration | REST communication works | PASS |
+
+
+12. VALIDATION CONCLUSION
+-------------------------
+
+The validation confirms that BidHub is a working full-stack online auction platform prototype. The React frontend builds successfully and communicates with the Express backend. The backend provides auction data, user registration, login, JWT authentication, protected user access, and bid validation.
+
+The application has passed the planned prototype validation checks. The system is suitable for academic demonstration and BCA final-year project submission. Production deployment would require a production database, HTTPS, rate limiting, email verification, payment integration, and additional automated tests.
