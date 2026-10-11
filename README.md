@@ -49,4 +49,4 @@ Follow these steps to run the project on your computer.
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone (https://github.com/Anwari-AK-DEV/OnlineAuctionPlatform)
